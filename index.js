@@ -17,17 +17,15 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/api/post', (req, res) => {
-	// Приймаємо данні з запиту, та беремо їх у змінні:
+	// Data from request to variable:
 	const start = req.body.start;
 	const finish = req.body.finish;
 	const day = req.body.day;
-	//console.log(req.body);
+
 	const sqlSelect = `SELECT * FROM trains WHERE startstation = '${start}' AND finishstation = '${finish}' AND (day1 = '${day}' OR day2 = '${day}' OR day3 = '${day}' OR day4 = '${day}');`;
 
 	db.query(sqlSelect, (err, result) => {
-		//console.log(err);
 		res.send(result);
-		// console.log(result);
 	});
 });
 
@@ -42,20 +40,6 @@ app.post('/api/other', (req, res) => {
 		res.send(result);
 	});
 });
-
-// app.post('/api/insert', (req, res) => {
-// 	// Приймаємо данні з запиту, та беремо їх у змінні:
-// 	const startstation = req.body.startstation;
-// 	const finishstation = req.body.finishstation;
-// 	const day = req.body.day;
-
-// 	const sqlInsert = `INSERT INTO trains (startstation, finishstation) VALUES (?, ?);`;
-
-// 	db.query(sqlInsert, [startstation, finishstation], (err, result) => {
-// 		console.log(err);
-// 		console.log(result);
-// 	});
-// });
 
 // Listener
 app.listen(3001, () => {
